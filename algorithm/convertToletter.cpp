@@ -15,12 +15,12 @@ vector<char> convertToletter(int n)
         if (0==mod)
         {
             mod=26;
-            c.push_back(mod + 64);
+            c.push_back(char(mod + 64));
             n = n / 26 -1;
         }
         else
         {
-            c.push_back(mod + 64);
+            c.push_back(char(mod + 64));
             n = n / 26;
         }
     } 
@@ -40,5 +40,5 @@ int main()
     //     sum = sum*10+s[i]-'0';
     // }
 	vector<char> c = convertToletter(sum);
-	
+    }
 }
