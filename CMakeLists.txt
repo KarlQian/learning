@@ -25,6 +25,7 @@ set(CXX_FLAGS
         -march=native
         # -MMD
         -rdynamic
+        -pthread
         )
  
 #string(TOUPPER ${CMAKE_BUILD_TYPE} BUILD_TYPE)
@@ -36,6 +37,6 @@ string(REPLACE ";" " " CMAKE_CXX_FLAGS "${CXX_FLAGS}")
 #include_directories(${Boost_INCLUDE_DIRS})
 
 add_subdirectory(C++)
-#add_subdirectory(os)
+add_subdirectory(os)
 add_subdirectory(algorithm)
 

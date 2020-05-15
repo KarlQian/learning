@@ -19,8 +19,8 @@ class Query_base
 {
 	friend class Query;
 	protected:
-		virtual QueryResult eval(const TextQuery& text) { cout << "Qbase::pure eval:" <<this<<endl; return QueryResult(); };
-		virtual string rep() { cout << "pure rep" << endl; return "0"; }
+		virtual QueryResult eval(const TextQuery& text) = 0;// { cout << "Qbase::pure eval:" <<this<<endl; return QueryResult(); };
+		virtual string rep() =0;//{ cout << "pure rep" << endl; return "0"; }
 	//public:
 	//virtual ~Query_base()=default;
 	

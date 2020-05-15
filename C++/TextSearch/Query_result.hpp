@@ -24,7 +24,7 @@ class QueryResult
 		for (auto n:qresult.lineno)
 		{
 
-			os<<"line["<<n+1<<"]"<<(*qresult.ptext)[n];
+			os<<"line["<<n+1<<"]"<<(*qresult.ptext)[n]<<endl;
 		}
 		return os;
 	}

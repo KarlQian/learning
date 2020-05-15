@@ -9,14 +9,19 @@
 #include <algorithm>
 #include "query.hpp"
 #include "TextQuery.hpp"
+#include <unistd.h>
 using namespace std;
 
 
 int main()
-{
-	string file = "file.txt";
-    
+{char buf[256];
+    getcwd(buf,sizeof(buf));
+	string cwd = buf;
+	string file = cwd+"/file.txt";
+	cout<<file<<endl; //error to build folder
+	//string file = "/home/qianchen/Public/learning/C++/TextSearch/file.txt";
 	TextQuery t1(file);
+	cout<<t1.get_text()->at(0)<<endl;
 	std::string word;
 	Query q1 = Query("fiery") && Query("bird") || Query("wind");
 

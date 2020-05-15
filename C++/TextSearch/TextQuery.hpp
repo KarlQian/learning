@@ -9,6 +9,7 @@
 #include<sstream>
 #include <fstream>
 #include <algorithm>
+#include "assert.h"
 using namespace std;
 
 class TextQuery
@@ -19,6 +20,7 @@ public:
 	void init(string path)
 	{
 		ifstream input(path);
+		assert(input.is_open());
 		string line = "";
 		string word = "";
 		size_t lineno = 0;

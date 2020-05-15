@@ -4,17 +4,19 @@
 #include <mutex> 
 #include <unistd.h>             
 #include <condition_variable> 
+#include <chrono>
 using namespace std;
-
+// producer  consumer , two thread each
 mutex mtx;
 condition_variable produce, consume;  // 条件变量是一种同步机制，要和mutex以及lock一起使用
 
 queue<int> q;     // shared value by producers and consumers, which is the critical section
-int maxSize = 20;
+size_t maxSize = 20;
 
-void consumer() 
+void consumer(size_t delay) 
 {
-    while (true)
+    const auto termination_time = chrono::system_clock::now()+chrono::milliseconds(delay);
+    while (chrono::system_clock::now()<termination_time)
     {
         //this_thread::sleep_for(chrono::milliseconds(1000));
         sleep(1);//包含在unistd.h头文件中,Sleep包含在windows.h中
@@ -30,13 +32,14 @@ void consumer()
         cout << q.size() << '\n';
 
         produce.notify_all();                               // nodity(wake up) producer when q.size() != maxSize is true
-       lck.unlock();
+        lck.unlock();
     }
 }
 
-void producer(int id)
-{
-    while (true)
+void producer(int id, size_t delay)
+{    const auto termination_time = chrono::system_clock::now()+chrono::milliseconds(delay);
+
+    while (chrono::system_clock::now()<termination_time)
     {
         //this_thread::sleep_for(chrono::milliseconds(900));      // producer is a little faster than consumer  
         sleep(1);//  
@@ -59,12 +62,12 @@ void producer(int id)
 int main()
 {
     thread consumers[2], producers[2];
-
+    size_t time = 10000; // 10 s
     // spawn 2 consumers and 2 producers:
     for (int i = 0; i < 2; ++i)
     {
-        consumers[i] = thread(consumer);
-        producers[i] = thread(producer, i + 1);  //thread：第一个参数是task任务，第二个参数是task函数的参数 
+        consumers[i] = thread(consumer,time);
+        producers[i] = thread(producer, i + 1,time);  //thread：第一个参数是task任务，第二个参数是task函数的参数 
     }
 
     // join them back: (in this program, never join...)
@@ -73,7 +76,6 @@ int main()
         producers[i].join();
         consumers[i].join();
     }
-
-    system("pause");
+    printf("finish");
     return 0;
 }
