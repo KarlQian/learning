@@ -39,4 +39,6 @@ string(REPLACE ";" " " CMAKE_CXX_FLAGS "${CXX_FLAGS}")
 add_subdirectory(C++)
 add_subdirectory(os)
 add_subdirectory(algorithm)
+add_subdirectory(network)
+
 
