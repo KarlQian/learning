@@ -32,12 +32,14 @@ echo(int msgid , struct msg_buf* buf){
 
 	}
 }
+
 int main(){
     int msgid;
     int ret;
     pid_t pid;
 	struct msg_buf msgrcv_buf;
     msgid=msgget(key, IPC_CREAT|0666); 
+
     if(msgid==-1)
     {
 		// if (errno == EEXIST){
@@ -54,7 +56,6 @@ int main(){
 			return -1;
 
 	}
-    		
 	while (1)
 	{
 		ret= msgrcv(msgid, &msgrcv_buf, sizeof(msgrcv_buf.data),0,0);
@@ -63,7 +64,12 @@ int main(){
 			return -1;
 		}
 		printf("serv: recive message:%s",msgrcv_buf.data);
-		echo(msgid,&msgrcv_buf);
+		pid_t pid = fork();
+		if (pid==0){ //childern
+		echo(msgid,&msgrcv_buf);}
+		else {
+			printf("father: back to while");
+		}
 	}
 
 
