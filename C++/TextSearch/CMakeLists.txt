@@ -10,3 +10,7 @@ add_library(Query ${QUERYSOURCE})
 
 add_executable(TextSearch main.cpp)
 target_link_libraries(TextSearch Query)
+set_target_properties(TextSearch PROPERTIES
+COMPILE_FLAGS "-pthread"
+LINK_FLAGS "-pthread"
+)

@@ -2,6 +2,7 @@
 #include <iostream>
 #include <cstring>
 #include <vector>
+
 using namespace std;
 
 class MyString
@@ -17,7 +18,8 @@ public:
 	MyString(const char* cstr = 0) {
 		if (cstr) {
 			m_data = new char[strlen(cstr) + 1];
-			strcpy_s(m_data, strlen(cstr) + 1, cstr);
+			strncpy(m_data,cstr,strlen(cstr)+1);
+			//strcpy_s(m_data, strlen(cstr) + 1, cstr);
 		}
 		else {
 			m_data = new char[1];
@@ -29,7 +31,8 @@ public:
 	MyString(const MyString& str) {
 		CCtor++;
 		m_data = new char[strlen(str.m_data) + 1];
-		strcpy_s(m_data, strlen(str.m_data) + 1 ,str.m_data);
+		strncpy(m_data,str.m_data,strlen(str.m_data)+1);
+		//strcpy_s(m_data, strlen(str.m_data) + 1 ,str.m_data);
 	}
 	// 移动构造函数
 	MyString(MyString&& str) noexcept
@@ -46,7 +49,8 @@ public:
 
 		delete[] m_data;
 		m_data = new char[strlen(str.m_data) + 1];
-		strcpy_s(m_data, strlen(str.m_data)+1,str.m_data);
+		strncpy(m_data,str.m_data,strlen(str.m_data)+1);
+		//strcpy_s(m_data, strlen(str.m_data)+1,str.m_data);
 		return *this;
 	}
 
